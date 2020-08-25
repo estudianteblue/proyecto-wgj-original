@@ -48,4 +48,21 @@ a b 3 3 d d d 3 2 5 5 4 3 3 3 3 d d 3 3 a a 4 4 4 b 4 4 e . . .
 . . . . . . . e e e b b b 4 4 4 e e e . . . . . . . . . . . . . 
 . . . . . . . . . . e e e e e e . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-`</field></block></value><value name="kind"><shadow type="spritekind" id="vIZv=ciq`rz4Y9;m~nS]"><field name="MEMBER">Player</field></shadow></value></block></value></block></statement></block></xml>
+`</field></block></value><value name="kind"><shadow type="spritekind" id="vIZv=ciq`rz4Y9;m~nS]"><field name="MEMBER">Player</field></shadow></value></block></value></block></statement></block><block type="keyonevent" id="rWxb+2`3hQqx0btJLWDU" x="70" y="190"><field name="button">controller.left</field><field name="event">ControllerButtonEvent.Pressed</field><statement name="HANDLER"><block type="spritesetimage" id="ZHFqV3I+9l1/U!?SSHd="><value name="sprite"><block type="variables_get" id="kFhU@9H4L`f)tlc^=Kj{"><field name="VAR" id="?.Y7sOWxmh4U4Maz$c-A">mySprite</field></block></value><value name="img"><shadow type="screen_image_picker" id="oDphy*]heit01Mq!*GQm"><field name="img">img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`</field></shadow></value></block></statement></block></xml>
