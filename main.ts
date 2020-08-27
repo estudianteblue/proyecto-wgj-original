@@ -1,22 +1,42 @@
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    Stephanie.setImage(img`
-        . . . . . f f f f f f . . . . . 
-        . . . . f 8 8 8 8 8 8 f . . . . 
-        . . . f 8 8 8 8 8 8 8 8 f . . . 
-        . . f 8 8 8 8 8 8 8 8 8 8 f . . 
-        . . f 6 6 6 6 6 6 6 6 6 6 f . . 
-        . f 6 6 4 4 6 4 4 6 6 4 6 6 f . 
-        . f 6 6 f f 4 4 4 4 f f 6 6 f . 
-        . f 9 9 f 1 f 4 4 f 1 f 9 9 f . 
-        . f 9 9 4 1 f 4 4 f 1 4 9 9 f . 
-        f f 9 9 f 4 4 4 4 4 4 f 9 9 f f 
-        f 9 9 f f f 4 4 4 4 f f f 9 9 f 
-        . f 4 4 f 6 9 9 9 9 6 f 4 4 f . 
-        . . 4 4 8 9 9 9 9 9 9 8 4 4 . . 
-        . . 4 f 6 9 6 9 6 9 6 6 f 4 . . 
-        . . . f f 1 9 1 9 1 9 f f . . . 
-        . . . . . f f 6 6 f f . . . . . 
-        `)
+namespace SpriteKind {
+    export const baba = SpriteKind.create()
+    export const villano = SpriteKind.create()
+    export const comida = SpriteKind.create()
+}
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
+    game.over(true)
+    effects.confetti.startScreenEffect(100)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.comida, function (sprite, otherSprite) {
+    coin.destroy()
+    info.changeScoreBy(10)
+    music.pewPew.play()
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 9 9 . . . . . . . . 
+        . . . . . 9 9 9 9 . . . . . . . 
+        . . . . 9 9 9 9 . 9 . . . . . . 
+        . . . . 9 9 9 9 9 9 . . . . . . 
+        . . . . . 9 9 9 9 . . . . . . . 
+        . . . . . . 9 9 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, Stephanie, 200, 0)
+    music.pewPew.play()
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Stephanie.isHittingTile(CollisionDirection.Bottom)) {
+        Stephanie.vy = -150
+    }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     Stephanie.setImage(img`
@@ -58,46 +78,27 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . f f 6 6 f f . . . . 
         `)
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    Stephanie.setImage(img`
-        . . . . . f f f f f f . . . . . 
-        . . . . f 8 8 8 8 8 8 f . . . . 
-        . . . f 8 8 8 8 8 8 8 8 f . . . 
-        . . f 8 8 8 8 8 8 8 8 8 8 f . . 
-        . . f 6 6 6 6 6 6 6 6 6 6 f . . 
-        . f 6 6 4 4 6 4 4 6 6 4 6 6 f . 
-        . f 6 6 f f 4 4 4 4 f f 6 6 f . 
-        . f 9 9 f 1 f 4 4 f 1 f 9 9 f . 
-        . f 9 9 4 1 f 4 4 f 1 4 9 9 f . 
-        f f 9 9 f 4 4 4 4 4 4 f 9 9 f f 
-        f 9 9 f f f 4 4 4 4 f f f 9 9 f 
-        . f 4 4 f 6 9 9 9 9 6 f 4 4 f . 
-        . . 4 4 8 9 9 9 9 9 9 8 4 4 . . 
-        . . 4 f 6 9 6 9 6 9 6 6 f 4 . . 
-        . . . f f 1 9 1 9 1 9 f f . . . 
-        . . . . . f f 6 6 f f . . . . . 
-        `)
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    game.over(false)
+    game.splash("perdiste")
+    music.wawawawaa.play()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    alcohol.destroy()
+    info.changeScoreBy(10)
+    music.pewPew.play()
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    covid__19.destroy()
+    info.changeScoreBy(100)
+})
+let projectile: Sprite = null
+let coin: Sprite = null
+let alcohol: Sprite = null
+let covid__19: Sprite = null
 let Stephanie: Sprite = null
-Stephanie = sprites.create(img`
-    . . . . . f f f f f f . . . . . 
-    . . . . f 8 8 8 8 8 8 f . . . . 
-    . . . f 8 8 8 8 8 8 8 8 f . . . 
-    . . f 8 8 8 8 8 8 8 8 8 8 f . . 
-    . . f 6 6 6 6 6 6 6 6 6 6 f . . 
-    . f 6 6 4 4 6 4 4 6 6 4 6 6 f . 
-    . f 6 6 f f 4 4 4 4 f f 6 6 f . 
-    . f 9 9 f 1 f 4 4 f 1 f 9 9 f . 
-    . f 9 9 4 1 f 4 4 f 1 4 9 9 f . 
-    f f 9 9 f 4 4 4 4 4 4 f 9 9 f f 
-    f 9 9 f f f 4 4 4 4 f f f 9 9 f 
-    . f 4 4 f 6 9 9 9 9 6 f 4 4 f . 
-    . . 4 4 8 9 9 9 9 9 9 8 4 4 . . 
-    . . 4 f 6 9 6 9 6 9 6 6 f 4 . . 
-    . . . f f 1 9 1 9 1 9 f f . . . 
-    . . . . . f f 6 6 f f . . . . . 
-    `, SpriteKind.Player)
-controller.moveSprite(Stephanie, 200, 0)
+music.baDing.play()
+effects.confetti.startScreenEffect(100)
 scene.setBackgroundImage(img`
     9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
     9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
@@ -220,3 +221,95 @@ scene.setBackgroundImage(img`
     8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
     8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
     `)
+Stephanie = sprites.create(img`
+    . . . . . f f f f f f . . . . . 
+    . . . . f 8 8 8 8 8 8 f . . . . 
+    . . . f 8 8 8 8 8 8 8 8 f . . . 
+    . . f 8 8 8 8 8 8 8 8 8 8 f . . 
+    . . f 6 6 6 6 6 6 6 6 6 6 f . . 
+    . f 6 6 4 4 6 4 4 6 6 4 6 6 f . 
+    . f 6 6 f f 4 4 4 4 f f 6 6 f . 
+    . f 9 9 f 1 f 4 4 f 1 f 9 9 f . 
+    . f 9 9 4 1 f 4 4 f 1 4 9 9 f . 
+    f f 9 9 f 4 4 4 4 4 4 f 9 9 f f 
+    f 9 9 f f f 4 4 4 4 f f f 9 9 f 
+    . f 4 4 f 6 9 9 9 9 6 f 4 4 f . 
+    . . 4 4 8 9 9 9 9 9 9 8 4 4 . . 
+    . . 4 f 6 9 6 9 6 9 6 6 f 4 . . 
+    . . . f f 1 9 1 9 1 9 f f . . . 
+    . . . . . f f 6 6 f f . . . . . 
+    `, SpriteKind.Player)
+controller.moveSprite(Stephanie, 100, 0)
+tiles.setTilemap(tiles.createTilemap(hex`20000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000050000000000000000060000000000000000000000000000000000000000000001010000000000000001010000000000010100000000000000000000000000000000000000000000000000000400000000000000000301010101010101000001010101010100000001010101010000010101010101010000000000000002020000000000000202020000000000020200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . 2 2 . . . . . . . 2 2 . . . . . 2 2 . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    2 2 2 2 2 2 2 . . 2 2 2 2 2 2 . . . 2 2 2 2 2 . . 2 2 2 2 2 2 2 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+    `, [myTiles.transparency16,myTiles.tile1,sprites.dungeon.hazardLava0,myTiles.tile2,myTiles.tile4,myTiles.tile5,myTiles.tile6], TileScale.Sixteen))
+scene.cameraFollowSprite(Stephanie)
+Stephanie.ay = 300
+info.setLife(3)
+covid__19 = sprites.create(img`
+    . 7 . . . . 7 . . . . . . 7 . . 
+    . 7 . . . . 7 . . . . 7 7 7 . . 
+    . 7 7 7 . . 7 . . . . 7 . . . . 
+    . . . 7 . 7 7 7 7 . 7 7 . . . . 
+    . . . . 7 7 f f 7 7 . . . . . . 
+    . . . 7 7 f 7 7 f 7 7 . . . . . 
+    7 7 7 7 7 f 7 7 f 7 7 7 7 7 7 . 
+    . . . 7 7 7 7 7 7 7 7 . . . . . 
+    . . . . 7 f f f 7 7 . . . . . . 
+    . . 7 7 7 7 7 7 7 . 7 . . . . . 
+    . . 7 . . . 7 . . . 7 7 7 . . . 
+    . 7 7 . . . 7 . . . . . 7 . . . 
+    . . . . . . 7 . . . . . 7 7 . . 
+    . . . . . . 7 . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Enemy)
+tiles.placeOnRandomTile(covid__19, myTiles.tile4)
+alcohol = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 . . . . . . . . 
+    . . . . . . . 8 . . . . . . . . 
+    . . . . . . 8 8 8 . . . . . . . 
+    . . . . . 8 8 8 8 8 . . . . . . 
+    . . . . 8 8 8 8 8 8 8 . . . . . 
+    . . . 8 8 8 8 8 8 8 8 8 . . . . 
+    . . . 8 8 8 8 8 8 8 8 8 . . . . 
+    . . . 8 8 8 8 8 8 8 8 8 . . . . 
+    . . . 8 8 8 8 8 8 8 8 8 . . . . 
+    . . . 8 8 8 8 8 8 8 8 8 . . . . 
+    . . . . 8 8 8 8 8 8 8 . . . . . 
+    . . . . . 8 8 8 8 8 . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Food)
+tiles.placeOnRandomTile(alcohol, myTiles.tile5)
+coin = sprites.create(img`
+    . . . f f f f f . . . 
+    . . f 5 5 5 5 5 f . . 
+    . f 5 1 5 f 5 5 5 f . 
+    f 5 1 5 f f f 5 5 4 f 
+    f 5 5 5 f 5 5 5 5 4 f 
+    f 5 5 5 5 f 5 5 5 4 f 
+    f 5 5 5 5 5 f 5 5 4 f 
+    f 5 5 5 f f f 5 5 4 f 
+    . f 5 5 5 f 5 5 4 f . 
+    . . f 4 4 4 4 4 f . . 
+    . . . f f f f f . . . 
+    `, SpriteKind.comida)
+tiles.placeOnRandomTile(coin, myTiles.tile6)
+game.onUpdate(function () {
+    if (Stephanie.tileKindAt(TileDirection.Bottom, sprites.dungeon.hazardLava0)) {
+        Stephanie.setPosition(10, 0)
+        info.changeLifeBy(-1)
+    }
+})
