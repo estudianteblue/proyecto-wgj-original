@@ -3,10 +3,6 @@ namespace SpriteKind {
     export const villano = SpriteKind.create()
     export const comida = SpriteKind.create()
 }
-scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
-    game.over(true)
-    effects.confetti.startScreenEffect(100)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.comida, function (sprite, otherSprite) {
     coin.destroy()
     info.changeScoreBy(10)
@@ -32,6 +28,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         `, Stephanie, 200, 0)
     music.pewPew.play()
+})
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile2, function (sprite, location) {
+    game.over(true)
+    effects.confetti.startScreenEffect(100)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Stephanie.isHittingTile(CollisionDirection.Bottom)) {
